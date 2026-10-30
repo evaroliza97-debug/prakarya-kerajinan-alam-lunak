@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Prakarya VII - Kerajinan Bahan Alam Lunak</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        earth: {
+                            50: '#fdfbf7',
+                            100: '#f7f2e8',
+                            200: '#efe3cd',
+                            300: '#decaa0',
+                            400: '#cdac70',
+                            500: '#b88e4c',
+                            600: '#9b703d',
+                            700: '#7d5533',
+                            800: '#67462f',
+                            900: '#553a29',
+                        },
+                        terracotta: {
+                            500: '#d96b43',
+                            600: '#c0522b',
+                        },
+                        leaf: {
+                            500: '#4a7c59',
+                            600: '#3a6345',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f2e8;
+            color: #553a29;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #efe3cd;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9b703d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7d5533;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Print Style for Design Card */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-card, #printable-card * {
+                visibility: visible;
+            }
+            #printable-card {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-earth-300 selection:text-earth-900">
+
+    <!-- HEADER / NAVIGATION BAR -->
+    <header id="main-header" class="bg-earth-800 text-earth-50 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+                <div class="w-10 h-10 rounded-full bg-terracotta-500 flex items-center justify-center font-bold text-xl shadow">
+                    🌿
+                </div>
+                <div>
+                    <h1 class="font-bold text-base sm:text-lg leading-tight">Prakarya VII</h1>
+                    <p class="text-xs text-earth-300">Kerajinan Bahan Alam Lunak</p>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center space-x-1 text-sm font-medium">
+                <button onclick="navigateTo('home')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Beranda</button>
+                <button onclick="navigateTo('petunjuk')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Petunjuk</button>
+                <button onclick="navigateTo('tujuan')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Tujuan</button>
+                <button onclick="navigateTo('materi')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Materi</button>
+                <button onclick="navigateTo('galeri')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Galeri</button>
+                <button onclick="navigateTo('aktivitas')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Aktivitas</button>
+                <button onclick="navigateTo('lab')" class="nav-btn px-3 py-2 rounded-lg bg-terracotta-500 hover:bg-terracotta-600 text-white font-semibold shadow transition">Lab Desain</button>
+                <button onclick="navigateTo('evaluasi')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Kuis</button>
+                <button onclick="navigateTo('refleksi')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Refleksi</button>
+                <button onclick="navigateTo('profil')" class="nav-btn px-3 py-2 rounded-lg hover:bg-earth-700 transition">Profil</button>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-earth-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-earth-900 border-t border-earth-700 px-4 pt-2 pb-4 space-y-1 text-sm font-medium">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Beranda</button>
+            <button onclick="navigateTo('petunjuk'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Petunjuk</button>
+            <button onclick="navigateTo('tujuan'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Tujuan Pembelajaran</button>
+            <button onclick="navigateTo('materi'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Materi Pembelajaran</button>
+            <button onclick="navigateTo('galeri'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Galeri Produk</button>
+            <button onclick="navigateTo('aktivitas'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Aktivitas Interaktif</button>
+            <button onclick="navigateTo('lab'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded bg-terracotta-500 text-white font-semibold">Lab Perancangan Virtual</button>
+            <button onclick="navigateTo('evaluasi'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Evaluasi & Kuis</button>
+            <button onclick="navigateTo('refleksi'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Refleksi</button>
+            <button onclick="navigateTo('profil'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded hover:bg-earth-800">Profil Pengembang</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- ==================== 1. HALAMAN PEMBUKA (COVER) ==================== -->
+        <section id="page-home" class="page-section animate-fade-in min-h-[80vh] flex flex-col justify-center items-center text-center py-8">
+            <div class="max-w-3xl bg-earth-100 p-8 sm:p-12 rounded-3xl shadow-xl border border-earth-200 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-earth-300 rounded-full opacity-30 blur-xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-terracotta-500 rounded-full opacity-20 blur-xl"></div>
+                
+                <span class="inline-block px-4 py-1.5 rounded-full bg-leaf-500 text-white font-semibold text-xs tracking-wide uppercase mb-4 shadow-sm">
+                    Kurikulum Merdeka • Fase D Kelas VII
+                </span>
+                
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-earth-900 mb-4 leading-tight">
+                    Mengenal & Merancang Produk Kerajinan dari <span class="text-terracotta-500">Bahan Alam Lunak</span>
+                </h1>
+                
+                <p class="text-earth-700 text-base sm:text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
+                    Jelajahi keajaiban bahan lunak dari alam Indonesia seperti tanah liat, kulit, dan getah. Pelajari tekniknya, buat rancangan produk kerajinanmu sendiri, dan uji pemahamanmu!
+                </p>
+
+                <!-- SVG Visual Artwork -->
+                <div class="my-6 flex justify-center items-center gap-4 sm:gap-8 flex-wrap">
+                    <div class="bg-earth-50 p-4 rounded-2xl shadow border border-earth-200 text-center transform hover:scale-105 transition">
+                        <div class="text-4xl mb-1">🏺</div>
+                        <span class="text-xs font-bold text-earth-800">Tanah Liat</span>
+                    </div>
+                    <div class="bg-earth-50 p-4 rounded-2xl shadow border border-earth-200 text-center transform hover:scale-105 transition">
+                        <div class="text-4xl mb-1">🪵</div>
+                        <span class="text-xs font-bold text-earth-800">Getah Nyatu</span>
+                    </div>
+                    <div class="bg-earth-50 p-4 rounded-2xl shadow border border-earth-200 text-center transform hover:scale-105 transition">
+                        <div class="text-4xl mb-1">👞</div>
+                        <span class="text-xs font-bold text-earth-800">Kulit Alam</span>
+                    </div>
+                    <div class="bg-earth-50 p-4 rounded-2xl shadow border border-earth-200 text-center transform hover:scale-105 transition">
+                        <div class="text-4xl mb-1">🌾</div>
+                        <span class="text-xs font-bold text-earth-800">Flour Clay</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button onclick="navigateTo('petunjuk')" class="w-full sm:w-auto px-8 py-4 bg-terracotta-500 hover:bg-terracotta-600 text-white font-bold rounded-2xl shadow-lg transform hover:-translate-y-1 transition text-lg flex items-center justify-center gap-2">
+                        <span>🚀 MULAI BELAJAR</span>
+                    </button>
+                    <button onclick="navigateTo('materi')" class="w-full sm:w-auto px-6 py-4 bg-earth-200 hover:bg-earth-300 text-earth-900 font-semibold rounded-2xl transition text-base">
+                        📖 Langsung ke Materi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 2. MENU PETUNJUK PENGGUNAAN ==================== -->
+        <section id="page-petunjuk" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🧩</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Petunjuk Penggunaan Media</h2>
+                </div>
+                
+                <p class="text-earth-700 mb-8">
+                    Media Pembelajaran Interaktif (MPI) ini dirancang untuk membantumu belajar secara mandiri maupun berkelompok. Bacalah panduan navigasi di bawah ini:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-earth-200 flex items-start gap-4">
+                        <div class="p-3 bg-earth-200 rounded-xl text-2xl">📱</div>
+                        <div>
+                            <h3 class="font-bold text-earth-900 mb-1">Navigasi Utama</h3>
+                            <p class="text-sm text-earth-700">Gunakan bar navigasi di bagian atas untuk berpindah antar menu utama dengan cepat.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-earth-200 flex items-start gap-4">
+                        <div class="p-3 bg-earth-200 rounded-xl text-2xl">📚</div>
+                        <div>
+                            <h3 class="font-bold text-earth-900 mb-1">Modul Materi</h3>
+                            <p class="text-sm text-earth-700">Materi dibagi menjadi tab submateri (A-F). Klik tab untuk membaca topik pilihanmu.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-earth-200 flex items-start gap-4">
+                        <div class="p-3 bg-earth-200 rounded-xl text-2xl">🖼️</div>
+                        <div>
+                            <h3 class="font-bold text-earth-900 mb-1">Galeri Interaktif</h3>
+                            <p class="text-sm text-earth-700">Klik kartu produk pada Galeri untuk melihat informasi lengkap produk kerajinan.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-earth-200 flex items-start gap-4">
+                        <div class="p-3 bg-earth-200 rounded-xl text-2xl">🎮</div>
+                        <div>
+                            <h3 class="font-bold text-earth-900 mb-1">Aktivitas Interaktif</h3>
+                            <p class="text-sm text-earth-700">Gunakan fitur klik dan pasangkan untuk melatih pemahaman materi secara menyenangkan.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-earth-200 flex items-start gap-4">
+                        <div class="p-3 bg-earth-200 rounded-xl text-2xl">🧪</div>
+                        <div>
+                            <h3 class="font-bold text-earth-900 mb-1">Lab Perancangan Virtual</h3>
+                            <p class="text-sm text-earth-700">Simulasikan ide rancangan kerajinanmu. Hasilnya bisa kamu cetak / simpan sebagai Lembar Kerja!</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-earth-200 flex items-start gap-4">
+                        <div class="p-3 bg-earth-200 rounded-xl text-2xl">📝</div>
+                        <div>
+                            <h3 class="font-bold text-earth-900 mb-1">Kuis Evaluasi</h3>
+                            <p class="text-sm text-earth-700">Jawab 15 soal kuis di akhir pembelajaran untuk mengetahui nilai dan skor kemampuanmu.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="navigateTo('tujuan')" class="px-6 py-3 bg-earth-800 text-white rounded-xl font-semibold hover:bg-earth-900 transition flex items-center gap-2">
+                        <span>Lanjut ke Tujuan Pembelajaran</span> ➔
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 3. MENU TUJUAN PEMBELAJARAN ==================== -->
+        <section id="page-tujuan" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🎯</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Tujuan Pembelajaran</h2>
+                </div>
+                
+                <p class="text-earth-700 mb-6">
+                    Capaian Pembelajaran (Fase D - Kurikulum Merdeka): Peserta didik mampu mengeksplorasi, merancang, dan membuat produk kerajinan bahan alam lunak yang bernilai fungsi dan estetis.
+                </p>
+
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-leaf-500 flex items-center gap-4">
+                        <div class="w-8 h-8 bg-leaf-500 text-white font-bold rounded-full flex items-center justify-center flex-shrink-0">1</div>
+                        <p class="text-earth-800 text-sm sm:text-base font-medium">Mengidentifikasi berbagai jenis bahan alam lunak untuk karya kerajinan.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-leaf-500 flex items-center gap-4">
+                        <div class="w-8 h-8 bg-leaf-500 text-white font-bold rounded-full flex items-center justify-center flex-shrink-0">2</div>
+                        <p class="text-earth-800 text-sm sm:text-base font-medium">Menjelaskan karakteristik, sifat, dan ciri khas bahan alam lunak.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-leaf-500 flex items-center gap-4">
+                        <div class="w-8 h-8 bg-leaf-500 text-white font-bold rounded-full flex items-center justify-center flex-shrink-0">3</div>
+                        <p class="text-earth-800 text-sm sm:text-base font-medium">Mengidentifikasi ragam bentuk dan fungsi produk kerajinan dari bahan alam lunak.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-leaf-500 flex items-center gap-4">
+                        <div class="w-8 h-8 bg-leaf-500 text-white font-bold rounded-full flex items-center justify-center flex-shrink-0">4</div>
+                        <p class="text-earth-800 text-sm sm:text-base font-medium">Menentukan alat dan bahan pendukung yang tepat sesuai jenis kerajinan.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-leaf-500 flex items-center gap-4">
+                        <div class="w-8 h-8 bg-leaf-500 text-white font-bold rounded-full flex items-center justify-center flex-shrink-0">5</div>
+                        <p class="text-earth-800 text-sm sm:text-base font-medium">Menganalisis teknik pemrosesan & pembentukan kerajinan bahan alam lunak.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-leaf-500 flex items-center gap-4">
+                        <div class="w-8 h-8 bg-leaf-500 text-white font-bold rounded-full flex items-center justify-center flex-shrink-0">6</div>
+                        <p class="text-earth-800 text-sm sm:text-base font-medium">Menyusun langkah-langkah dan prosedur kerja pembuatan kerajinan secara sistematis.</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-terracotta-500 flex items-center gap-4 bg-terracotta-50">
+                        <div class="w-8 h-8 bg-terracotta-500 text-white font-bold rounded-full flex items-center justify-center flex-shrink-0">7</div>
+                        <p class="text-earth-900 text-sm sm:text-base font-bold">Merancang produk kerajinan bahan alam lunak secara kreatif pada Lab Perancangan.</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="navigateTo('materi')" class="px-6 py-3 bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-xl font-bold shadow transition flex items-center gap-2">
+                        <span>Mulai Pelajari Materi</span> 📖
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 4. MENU MATERI PEMBELAJARAN ==================== -->
+        <section id="page-materi" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-4 sm:p-8 shadow-lg border border-earth-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">📚</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Materi Pembelajaran</h2>
+                </div>
+
+                <!-- Sub-Materi Tabs -->
+                <div class="flex flex-wrap gap-2 mb-6 border-b border-earth-300 pb-4 overflow-x-auto">
+                    <button onclick="switchMateriTab('tab-a')" id="btn-tab-a" class="materi-tab-btn active px-4 py-2 rounded-xl text-sm font-bold bg-earth-800 text-white transition">A. Pengertian</button>
+                    <button onclick="switchMateriTab('tab-b')" id="btn-tab-b" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-earth-200 text-earth-800 hover:bg-earth-300 transition">B. Jenis Bahan</button>
+                    <button onclick="switchMateriTab('tab-c')" id="btn-tab-c" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-earth-200 text-earth-800 hover:bg-earth-300 transition">C. Bentuk Produk</button>
+                    <button onclick="switchMateriTab('tab-d')" id="btn-tab-d" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-earth-200 text-earth-800 hover:bg-earth-300 transition">D. Alat & Bahan</button>
+                    <button onclick="switchMateriTab('tab-e')" id="btn-tab-e" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-earth-200 text-earth-800 hover:bg-earth-300 transition">E. Teknik Pembuatan</button>
+                    <button onclick="switchMateriTab('tab-f')" id="btn-tab-f" class="materi-tab-btn px-4 py-2 rounded-xl text-sm font-bold bg-earth-200 text-earth-800 hover:bg-earth-300 transition">F. Prosedur Kerja</button>
+                </div>
+
+                <!-- Sub-Materi Content Container -->
+                <div id="materi-content-box" class="bg-white p-6 sm:p-8 rounded-2xl border border-earth-200 min-h-[400px]">
+                    
+                    <!-- TAB A: PENGERTIAN -->
+                    <div id="materi-tab-a" class="materi-tab-content">
+                        <h3 class="text-xl font-bold text-earth-900 mb-4 border-b border-earth-200 pb-2">A. Pengertian Kerajinan Bahan Alam Lunak</h3>
+                        <p class="text-earth-800 mb-4 leading-relaxed">
+                            <strong>Bahan alam lunak</strong> adalah bahan untuk karya kerajinan yang diperoleh dari alam sekitar dan pengolahannya tidak dicampur maupun diubah secara kimiawi. Bahan ini memiliki sifat fisik yang <em>plastis, lembut, lentur, dan mudah dibentuk</em> tanpa memerlukan alat bantu berat.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                            <div class="bg-earth-50 p-4 rounded-xl border border-earth-200">
+                                <h4 class="font-bold text-terracotta-500 mb-2">🌱 Karakteristik Utama:</h4>
+                                <ul class="list-disc list-inside text-sm text-earth-800 space-y-1">
+                                    <li>Berasal langsung dari alam (tumbuhan, hewan, atau lapisan tanah).</li>
+                                    <li>Mudah dibentuk saat kondisi basah/lembab.</li>
+                                    <li>Dapat mengalami pengerasan setelah dikeringkan atau dibakar.</li>
+                                    <li>Ramah lingkungan dan bersifat alami.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-earth-50 p-4 rounded-xl border border-earth-200">
+                                <h4 class="font-bold text-leaf-600 mb-2">💡 Nilai Fungsional & Estetis:</h4>
+                                <p class="text-sm text-earth-800 leading-relaxed">
+                                    Produk kerajinan bahan alam lunak dibuat untuk memenuhi dua fungsi utama: <strong>Fungsi Pakai</strong> (contoh: wadah, tempat pensil) dan <strong>Fungsi Hias</strong> (contoh: patung hiasan, pajangan dinding).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB B: JENIS BAHAN -->
+                    <div id="materi-tab-b" class="materi-tab-content hidden">
+                        <h3 class="text-xl font-bold text-earth-900 mb-4 border-b border-earth-200 pb-2">B. Jenis-Jenis Bahan Alam Lunak</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            
+                            <div class="bg-earth-50 p-5 rounded-xl border border-earth-200">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-3xl">🏺</span>
+                                    <h4 class="text-lg font-bold text-earth-900">1. Tanah Liat (Clay)</h4>
+                                </div>
+                                <p class="text-sm text-earth-700 leading-relaxed">
+                                    Dikeluarkan dari dalam bumi. Sifatnya plastis saat basah dan mengeras saat kering. Untuk daya tahan lama, kerajinan tanah liat dibakar dalam tungku suhu 600°C–1300°C (keramik).
+                                </p>
+                            </div>
+
+                            <div class="bg-earth-50 p-5 rounded-xl border border-earth-200">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-3xl">🪵</span>
+                                    <h4 class="text-lg font-bold text-earth-900">2. Getah Nyatu</h4>
+                                </div>
+                                <p class="text-sm text-earth-700 leading-relaxed">
+                                    Berasal dari pohon nyatu (khas Kalimantan Tengah). Memerlukan proses perebusan agar melunak dan lentur saat akan dibentuk menjadi kerajinan khas seperti kapal suku Dayak.
+                                </p>
+                            </div>
+
+                            <div class="bg-earth-50 p-5 rounded-xl border border-earth-200">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-3xl">👞</span>
+                                    <h4 class="text-lg font-bold text-earth-900">3. Kulit Alam</h4>
+                                </div>
+                                <p class="text-sm text-earth-700 leading-relaxed">
+                                    Berasal dari kulit hewan seperti sapi, kambing, atau buaya yang telah disamak. Sifatnya lentur, kuat, dan tahan lama. Digunakan untuk tas, sepatu, wayang kulit, dan sabuk.
+                                </p>
+                            </div>
+
+                            <div class="bg-earth-50 p-5 rounded-xl border border-earth-200">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-3xl">🌾</span>
+                                    <h4 class="text-lg font-bold text-earth-900">4. Flour Clay (Adonan Tepung)</h4>
+                                </div>
+                                <p class="text-sm text-earth-700 leading-relaxed">
+                                    Bahan alam lunak buatan berbahan dasar tepung (terigu/tapioka), air, dan lem. Mudah diberi warna dan aman digunakan untuk membuat gantungan kunci atau hiasan miniatur.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- TAB C: BENTUK PRODUK -->
+                    <div id="materi-tab-c" class="materi-tab-content hidden">
+                        <h3 class="text-xl font-bold text-earth-900 mb-4 border-b border-earth-200 pb-2">C. Ragam Bentuk Produk Kerajinan</h3>
+                        <p class="text-earth-800 mb-6">Berikut adalah berbagai bentuk produk kerajinan populer yang dapat dibuat dari bahan alam lunak:</p>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                            <div class="p-4 bg-earth-50 rounded-xl text-center border border-earth-200">
+                                <div class="text-3xl mb-2">🏺</div>
+                                <h4 class="font-bold text-earth-900 text-sm">Vas Bunga & Gerabah</h4>
+                                <p class="text-xs text-earth-600">Bentuk silindris/silinder untuk wadah tanaman/air.</p>
+                            </div>
+                            <div class="p-4 bg-earth-50 rounded-xl text-center border border-earth-200">
+                                <div class="text-3xl mb-2">🗿</div>
+                                <h4 class="font-bold text-earth-900 text-sm">Patung Miniatur</h4>
+                                <p class="text-xs text-earth-600">Bentuk figuratif 3 dimensi berupa tokoh, hewan, atau benda.</p>
+                            </div>
+                            <div class="p-4 bg-earth-50 rounded-xl text-center border border-earth-200">
+                                <div class="text-3xl mb-2">🛋️</div>
+                                <h4 class="font-bold text-earth-900 text-sm">Asbak & Tempat Lilin</h4>
+                                <p class="text-xs text-earth-600">Produk pakai meja dengan cekungan khusus.</p>
+                            </div>
+                            <div class="p-4 bg-earth-50 rounded-xl text-center border border-earth-200">
+                                <div class="text-3xl mb-2">🖼️</div>
+                                <h4 class="font-bold text-earth-900 text-sm">Hiasan Dinding (Relief)</h4>
+                                <p class="text-xs text-earth-600">Karya 2,5 dimensi berupa ukiran melayang pada papan.</p>
+                            </div>
+                            <div class="p-4 bg-earth-50 rounded-xl text-center border border-earth-200">
+                                <div class="text-3xl mb-2">🐷</div>
+                                <h4 class="font-bold text-earth-900 text-sm">Celengan Karakter</h4>
+                                <p class="text-xs text-earth-600">Wadah penyimpanan berongga dengan celah koin.</p>
+                            </div>
+                            <div class="p-4 bg-earth-50 rounded-xl text-center border border-earth-200">
+                                <div class="text-3xl mb-2">🎒</div>
+                                <h4 class="font-bold text-earth-900 text-sm">Aksesori & Busana</h4>
+                                <p class="text-xs text-earth-600">Gantungan kunci, dompet kulit, dan hiasan bros.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB D: ALAT DAN BAHAN -->
+                    <div id="materi-tab-d" class="materi-tab-content hidden">
+                        <h3 class="text-xl font-bold text-earth-900 mb-4 border-b border-earth-200 pb-2">D. Alat dan Bahan Pembuatan</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <h4 class="font-bold text-earth-900 mb-2">🛠️ Peralatan Utama Pembentukan:</h4>
+                                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-earth-800">
+                                    <li>• <strong>Butsir (Wood Tool):</strong> Untuk meraut, mengukir, dan menghaluskan media lunak.</li>
+                                    <li>• <strong>Meja Putar (Whirler):</strong> Untuk mempermudah membentuk benda silindris dari segala sisi.</li>
+                                    <li>• <strong>Papan Kayu/Alas:</strong> Sebagai tempat dudukan saat memproses bahan.</li>
+                                    <li>• <strong>Rol Kayu (Rolling Pin):</strong> Untuk menipiskan adonan/tanah liat menjadi lembaran.</li>
+                                    <li>• <strong>Tali Pemotong:</strong> Untuk memotong gumpalan tanah liat dengan rapi.</li>
+                                    <li>• <strong>Pahat & Cutter Kulit:</strong> Untuk mengukir dan memotong bahan kulit alam.</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <h4 class="font-bold text-earth-900 mb-2">🎨 Bahan Pendukung Finishing:</h4>
+                                <p class="text-sm text-earth-800">
+                                    Cat Akrilik, Vernis/Pernis bening, Pewarna Alami, Kuas, Air, Semir kulit, serta Penguat Kilap.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB E: TEKNIK PEMBUATAN -->
+                    <div id="materi-tab-e" class="materi-tab-content hidden">
+                        <h3 class="text-xl font-bold text-earth-900 mb-4 border-b border-earth-200 pb-2">E. Teknik Pembuatan Kerajinan</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <span class="px-2 py-1 bg-terracotta-500 text-white text-xs font-bold rounded">Teknik 1</span>
+                                <h4 class="font-bold text-earth-900 mt-2 mb-1">Pijit (Pinching)</h4>
+                                <p class="text-xs text-earth-700">Mencubit dan menekan tanah liat secara langsung menggunakan ibu jari dan jari tangan dari tengah ke luar hingga terbentuk cangkir/mangkuk.</p>
+                            </div>
+
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <span class="px-2 py-1 bg-terracotta-500 text-white text-xs font-bold rounded">Teknik 2</span>
+                                <h4 class="font-bold text-earth-900 mt-2 mb-1">Pilin (Coiling)</h4>
+                                <p class="text-xs text-earth-700">Membentuk adonan bahan lunak menjadi pilinan atau gulungan cacing dengan telapak tangan, lalu disusun melingkar bertingkat.</p>
+                            </div>
+
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <span class="px-2 py-1 bg-terracotta-500 text-white text-xs font-bold rounded">Teknik 3</span>
+                                <h4 class="font-bold text-earth-900 mt-2 mb-1">Lempeng (Slab)</h4>
+                                <p class="text-xs text-earth-700">Membuat lempengan tipis merata menggunakan rol kayu, kemudian dipotong sesuai pola kotak atau silinder.</p>
+                            </div>
+
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <span class="px-2 py-1 bg-leaf-500 text-white text-xs font-bold rounded">Teknik 4</span>
+                                <h4 class="font-bold text-earth-900 mt-2 mb-1">Cetak (Molding)</h4>
+                                <p class="text-xs text-earth-700">Memasukkan atau menekan bahan lunak ke dalam cetakan gips/plastik untuk menghasilkan bentuk identik secara cepat.</p>
+                            </div>
+
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <span class="px-2 py-1 bg-leaf-500 text-white text-xs font-bold rounded">Teknik 5</span>
+                                <h4 class="font-bold text-earth-900 mt-2 mb-1">Ukir & Tatah</h4>
+                                <p class="text-xs text-earth-700">Mengurangi atau menata selapis demi selapis permukaan bahan lunak (seperti kulit/tanah liat setengah kering) dengan butsir atau pahat.</p>
+                            </div>
+
+                            <div class="p-4 bg-earth-50 rounded-xl border border-earth-200">
+                                <span class="px-2 py-1 bg-leaf-500 text-white text-xs font-bold rounded">Teknik 6</span>
+                                <h4 class="font-bold text-earth-900 mt-2 mb-1">Penyusunan / Jahit</h4>
+                                <p class="text-xs text-earth-700">Khusus bahan kulit alam, digabungkan dengan teknik menjahit jarum dua atau menyambung dengan lem khusus.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB F: PROSEDUR KERJA -->
+                    <div id="materi-tab-f" class="materi-tab-content hidden">
+                        <h3 class="text-xl font-bold text-earth-900 mb-4 border-b border-earth-200 pb-2">F. Tahapan & Prosedur Kerja Pembuatan</h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded-full bg-earth-800 text-white font-bold flex items-center justify-center flex-shrink-0">1</div>
+                                <div>
+                                    <h4 class="font-bold text-earth-900">Perancangan & Sketsa Desain</h4>
+                                    <p class="text-sm text-earth-700">Membuat sketsa ide bentuk produk di atas kertas, menentukan fungsi, serta mengukur dimensi yang diinginkan.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded-full bg-earth-800 text-white font-bold flex items-center justify-center flex-shrink-0">2</div>
+                                <div>
+                                    <h4 class="font-bold text-earth-900">Persiapan Alat dan Bahan</h4>
+                                    <p class="text-sm text-earth-700">Menyiapkan bahan alam lunak (memastikan tingkat kelembaban cukup), papan alas, butsir, dan alat pendukung.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded-full bg-earth-800 text-white font-bold flex items-center justify-center flex-shrink-0">3</div>
+                                <div>
+                                    <h4 class="font-bold text-earth-900">Pembentukan Produk</h4>
+                                    <p class="text-sm text-earth-700">Membentuk bahan lunak sesuai sketsa menggunakan teknik pilihan (pijit, pilin, lempeng, atau cetak).</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded-full bg-earth-800 text-white font-bold flex items-center justify-center flex-shrink-0">4</div>
+                                <div>
+                                    <h4 class="font-bold text-earth-900">Pengeringan / Pengerasan</h4>
+                                    <p class="text-sm text-earth-700">Mengeringkan karya secara diangin-anginkan (hindari terik matahari langsung agar tidak retak). Pembakaran dilakukan jika menggunakan tanah liat.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded-full bg-earth-800 text-white font-bold flex items-center justify-center flex-shrink-0">5</div>
+                                <div>
+                                    <h4 class="font-bold text-earth-900">Finishing & Pewarnaan</h4>
+                                    <p class="text-sm text-earth-700">Penghalusan dengan ampelas halus, dilanjutkan pewarnaan (cat akrilik/vernis) untuk memperindah tampilan karya.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="navigateTo('tujuan')" class="px-5 py-2.5 bg-earth-200 text-earth-800 rounded-xl font-semibold hover:bg-earth-300 transition">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('galeri')" class="px-5 py-2.5 bg-earth-800 text-white rounded-xl font-semibold hover:bg-earth-900 transition flex items-center gap-2">
+                        <span>Lihat Galeri Produk</span> ➔
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 5. MENU GALERI PRODUK KERAJINAN ==================== -->
+        <section id="page-galeri" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-3xl">🖼️</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Galeri Produk Kerajinan</h2>
+                </div>
+                <p class="text-earth-700 mb-6">Klik pada salah satu produk di bawah ini untuk melihat detail spesifikasi alat, bahan, dan teknik pembuatannya!</p>
+
+                <!-- Grid Galeri -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Card 1 -->
+                    <div onclick="openGaleriModal('vas-tanah-liat')" class="bg-white rounded-2xl p-4 shadow-sm border border-earth-200 cursor-pointer transform hover:-translate-y-1 hover:shadow-md transition">
+                        <div class="h-40 bg-earth-200 rounded-xl flex items-center justify-center text-6xl mb-3">
+                            🏺
+                        </div>
+                        <span class="px-2.5 py-1 bg-terracotta-500 text-white text-xs font-bold rounded-md">Tanah Liat</span>
+                        <h3 class="font-bold text-earth-900 text-lg mt-2">Vas Bunga Motifs Kasongan</h3>
+                        <p class="text-xs text-earth-600 mt-1 line-clamp-2">Vas bunga tanah liat dengan hiasan ukiran pilin artistik.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div onclick="openGaleriModal('miniatur-getah')" class="bg-white rounded-2xl p-4 shadow-sm border border-earth-200 cursor-pointer transform hover:-translate-y-1 hover:shadow-md transition">
+                        <div class="h-40 bg-earth-200 rounded-xl flex items-center justify-center text-6xl mb-3">
+                            ⛵
+                        </div>
+                        <span class="px-2.5 py-1 bg-leaf-500 text-white text-xs font-bold rounded-md">Getah Nyatu</span>
+                        <h3 class="font-bold text-earth-900 text-lg mt-2">Perahu Naga Dayak</h3>
+                        <p class="text-xs text-earth-600 mt-1 line-clamp-2">Kerajinan miniatur perahu tradisional khas Kalimantan dari getah pohon nyatu.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div onclick="openGaleriModal('dompet-kulit')" class="bg-white rounded-2xl p-4 shadow-sm border border-earth-200 cursor-pointer transform hover:-translate-y-1 hover:shadow-md transition">
+                        <div class="h-40 bg-earth-200 rounded-xl flex items-center justify-center text-6xl mb-3">
+                            👛
+                        </div>
+                        <span class="px-2.5 py-1 bg-earth-700 text-white text-xs font-bold rounded-md">Kulit Alam</span>
+                        <h3 class="font-bold text-earth-900 text-lg mt-2">Dompet Etnik Ukir</h3>
+                        <p class="text-xs text-earth-600 mt-1 line-clamp-2">Dompet kulit sapi yang diukir bermotif flora nusantara.</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div onclick="openGaleriModal('gantungan-flour')" class="bg-white rounded-2xl p-4 shadow-sm border border-earth-200 cursor-pointer transform hover:-translate-y-1 hover:shadow-md transition">
+                        <div class="h-40 bg-earth-200 rounded-xl flex items-center justify-center text-6xl mb-3">
+                            🔑
+                        </div>
+                        <span class="px-2.5 py-1 bg-terracotta-500 text-white text-xs font-bold rounded-md">Flour Clay</span>
+                        <h3 class="font-bold text-earth-900 text-lg mt-2">Gantungan Kunci Buah</h3>
+                        <p class="text-xs text-earth-600 mt-1 line-clamp-2">Aksesori gantungan bentuk buah warna-warni dari adonan flour clay.</p>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div onclick="openGaleriModal('celengan-gerabah')" class="bg-white rounded-2xl p-4 shadow-sm border border-earth-200 cursor-pointer transform hover:-translate-y-1 hover:shadow-md transition">
+                        <div class="h-40 bg-earth-200 rounded-xl flex items-center justify-center text-6xl mb-3">
+                            🐷
+                        </div>
+                        <span class="px-2.5 py-1 bg-terracotta-500 text-white text-xs font-bold rounded-md">Tanah Liat</span>
+                        <h3 class="font-bold text-earth-900 text-lg mt-2">Celengan Ayam Tradisional</h3>
+                        <p class="text-xs text-earth-600 mt-1 line-clamp-2">Celengan tanah liat berbentuk hewan dengan finishing pewarnaan akrilik.</p>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div onclick="openGaleriModal('wayang-kulit')" class="bg-white rounded-2xl p-4 shadow-sm border border-earth-200 cursor-pointer transform hover:-translate-y-1 hover:shadow-md transition">
+                        <div class="h-40 bg-earth-200 rounded-xl flex items-center justify-center text-6xl mb-3">
+                            🎭
+                        </div>
+                        <span class="px-2.5 py-1 bg-earth-700 text-white text-xs font-bold rounded-md">Kulit Alam</span>
+                        <h3 class="font-bold text-earth-900 text-lg mt-2">Wayang Kulit Purwa</h3>
+                        <p class="text-xs text-earth-600 mt-1 line-clamp-2">Karya seni pertunjukan dari bahan kulit kerbau yang ditatah rapi.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL DETAIL GALERI -->
+        <div id="galeri-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-earth-200 animate-fade-in relative">
+                <button onclick="closeGaleriModal()" class="absolute top-4 right-4 text-earth-500 hover:text-earth-900 font-bold text-2xl">&times;</button>
+                <div id="modal-body">
+                    <!-- Dynamic content filled by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 6. MENU AKTIVITAS INTERAKTIF ==================== -->
+        <section id="page-aktivitas" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-3xl">🎮</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Aktivitas Belajar Interaktif</h2>
+                </div>
+                <p class="text-earth-700 mb-6">Uji pemahaman langsungmu dengan memasangkan item di bawah ini!</p>
+
+                <!-- Activity 1: Cocokkan Alat dan Fungsi -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-earth-200 mb-8">
+                    <h3 class="font-bold text-earth-900 text-lg mb-4 flex items-center gap-2">
+                        <span>1. Pasangkan Alat dengan Fungsinya yang Tepat</span>
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-earth-50 rounded-xl border border-earth-200">
+                            <span class="font-semibold text-earth-900">🛠️ Butsir (Wood Tool)</span>
+                            <select id="act-1" class="w-full sm:w-auto p-2 bg-white border border-earth-300 rounded-lg text-sm text-earth-900 focus:ring-2 focus:ring-terracotta-500">
+                                <option value="">-- Pilih Fungsi --</option>
+                                <option value="salah">Memotong gumpalan tanah dengan cepat</option>
+                                <option value="benar">Meraut, mengukir, dan menghaluskan permukaan lunak</option>
+                                <option value="salah">Menipiskan adonan menjadi lembaran</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-earth-50 rounded-xl border border-earth-200">
+                            <span class="font-semibold text-earth-900">🌀 Meja Putar</span>
+                            <select id="act-2" class="w-full sm:w-auto p-2 bg-white border border-earth-300 rounded-lg text-sm text-earth-900 focus:ring-2 focus:ring-terracotta-500">
+                                <option value="">-- Pilih Fungsi --</option>
+                                <option value="benar">Mempermudah pembentukan kerajinan simetris/silinder</option>
+                                <option value="salah">Mengeringkan tanah liat di dalam oven</option>
+                                <option value="salah">Menjahit kulit hewan</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-earth-50 rounded-xl border border-earth-200">
+                            <span class="font-semibold text-earth-900">🪵 Rol Kayu (Rolling Pin)</span>
+                            <select id="act-3" class="w-full sm:w-auto p-2 bg-white border border-earth-300 rounded-lg text-sm text-earth-900 focus:ring-2 focus:ring-terracotta-500">
+                                <option value="">-- Pilih Fungsi --</option>
+                                <option value="salah">Mengukir motif wayang</option>
+                                <option value="benar">Menipiskan bahan alam lunak menjadi lembaran lempeng</option>
+                                <option value="salah">Memoles pernis kilap</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-between">
+                        <button onclick="checkAktivitas1()" class="px-5 py-2.5 bg-leaf-500 hover:bg-leaf-600 text-white rounded-xl font-bold shadow transition">
+                            Periksa Jawaban
+                        </button>
+                        <div id="act-feedback" class="text-sm font-bold"></div>
+                    </div>
+                </div>
+
+                <!-- Activity 2: Urutkan Prosedur Kerajinan -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-earth-200">
+                    <h3 class="font-bold text-earth-900 text-lg mb-4">2. Susun Urutan Tahapan Pembuatan Kerajinan yang Benar</h3>
+                    <p class="text-xs text-earth-600 mb-4">Pilih nomor urutan (1 sampai 4) untuk setiap tahapan di bawah ini:</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-3 bg-earth-50 rounded-xl border border-earth-200 flex items-center justify-between">
+                            <span class="text-sm font-medium">Finishing & Pewarnaan</span>
+                            <select id="seq-step-4" class="p-1.5 border border-earth-300 rounded text-sm">
+                                <option value="">---</option>
+                                <option value="1">Langkah 1</option>
+                                <option value="2">Langkah 2</option>
+                                <option value="3">Langkah 3</option>
+                                <option value="4">Langkah 4</option>
+                            </select>
+                        </div>
+
+                        <div class="p-3 bg-earth-50 rounded-xl border border-earth-200 flex items-center justify-between">
+                            <span class="text-sm font-medium">Membuat Sketsa Rancangan</span>
+                            <select id="seq-step-1" class="p-1.5 border border-earth-300 rounded text-sm">
+                                <option value="">---</option>
+                                <option value="1">Langkah 1</option>
+                                <option value="2">Langkah 2</option>
+                                <option value="3">Langkah 3</option>
+                                <option value="4">Langkah 4</option>
+                            </select>
+                        </div>
+
+                        <div class="p-3 bg-earth-50 rounded-xl border border-earth-200 flex items-center justify-between">
+                            <span class="text-sm font-medium">Pembentukan Bahan Lunak</span>
+                            <select id="seq-step-3" class="p-1.5 border border-earth-300 rounded text-sm">
+                                <option value="">---</option>
+                                <option value="1">Langkah 1</option>
+                                <option value="2">Langkah 2</option>
+                                <option value="3">Langkah 3</option>
+                                <option value="4">Langkah 4</option>
+                            </select>
+                        </div>
+
+                        <div class="p-3 bg-earth-50 rounded-xl border border-earth-200 flex items-center justify-between">
+                            <span class="text-sm font-medium">Persiapan Alat & Bahan</span>
+                            <select id="seq-step-2" class="p-1.5 border border-earth-300 rounded text-sm">
+                                <option value="">---</option>
+                                <option value="1">Langkah 1</option>
+                                <option value="2">Langkah 2</option>
+                                <option value="3">Langkah 3</option>
+                                <option value="4">Langkah 4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-between">
+                        <button onclick="checkAktivitas2()" class="px-5 py-2.5 bg-leaf-500 hover:bg-leaf-600 text-white rounded-xl font-bold shadow transition">
+                            Cek Urutan
+                        </button>
+                        <div id="act-feedback-2" class="text-sm font-bold"></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="navigateTo('lab')" class="px-6 py-3 bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-xl font-bold shadow transition flex items-center gap-2">
+                        <span>Lanjut ke Lab Perancangan Produk</span> 🧪
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 7. MENU LABORATORIUM PERANCANGAN PRODUK ==================== -->
+        <section id="page-lab" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-3xl">🧪</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Laboratorium Perancangan Produk Virtual</h2>
+                </div>
+                <p class="text-earth-700 mb-8">Rancanglah produk kerajinan bahan alam lunak impianmu dengan memilih variabel desain di bawah ini!</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- FORM INPUT PERANCANGAN -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-earth-200 space-y-4">
+                        <h3 class="font-bold text-earth-900 text-lg border-b border-earth-200 pb-2">📋 Formulir Rancangan Karya</h3>
+
+                        <div>
+                            <label class="block text-xs font-bold text-earth-800 uppercase mb-1">1. Nama Desainer (Siswa)</label>
+                            <input type="text" id="lab-designer-name" placeholder="Masukkan nama lengkapmu..." class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-earth-800 uppercase mb-1">2. Nama Produk Kerajinan</label>
+                            <input type="text" id="lab-product-name" placeholder="Contoh: Vas Bunga Ukir Nusantara" class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-earth-800 uppercase mb-1">3. Jenis Bahan Utama</label>
+                                <select id="lab-material" class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500">
+                                    <option value="Tanah Liat (Clay)">Tanah Liat (Clay)</option>
+                                    <option value="Getah Nyatu">Getah Nyatu</option>
+                                    <option value="Kulit Alam Sapi/Kambing">Kulit Alam</option>
+                                    <option value="Flour Clay (Adonan Tepung)">Flour Clay</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-earth-800 uppercase mb-1">4. Bentuk Produk</label>
+                                <select id="lab-shape" class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500">
+                                    <option value="Silindris / Vas / Mangkuk">Silindris / Vas</option>
+                                    <option value="Miniatur / Patung 3D">Miniatur / Patung 3D</option>
+                                    <option value="Wadah Datar / Asbak / Piringan">Wadah Datar / Asbak</option>
+                                    <option value="Aksesori / Dompet / Gantungan Kunci">Aksesori / Dompet</option>
+                                    <option value="Hiasan Dinding / Relief">Hiasan Dinding / Relief</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-earth-800 uppercase mb-1">5. Teknik Pembuatan Utama</label>
+                                <select id="lab-technique" class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500">
+                                    <option value="Teknik Pijit (Pinching)">Teknik Pijit (Pinching)</option>
+                                    <option value="Teknik Pilin (Coiling)">Teknik Pilin (Coiling)</option>
+                                    <option value="Teknik Lempengan (Slab)">Teknik Lempengan (Slab)</option>
+                                    <option value="Teknik Cetak (Molding)">Teknik Cetak (Molding)</option>
+                                    <option value="Teknik Ukir / Tatah">Teknik Ukir / Tatah</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-earth-800 uppercase mb-1">6. Fungsi Produk</label>
+                                <select id="lab-function" class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500">
+                                    <option value="Fungsi Pakai (Digunakan Sehari-hari)">Fungsi Pakai</option>
+                                    <option value="Fungsi Hias (Pajangan / Estetis)">Fungsi Hias</option>
+                                    <option value="Fungsi Pakai & Hias (Ganda)">Fungsi Pakai & Hias</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-earth-800 uppercase mb-1">7. Peralatan yang Digunakan</label>
+                            <input type="text" id="lab-tools" placeholder="Contoh: Butsir, Meja Putar, Rol Kayu, Kuas" class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-earth-800 uppercase mb-1">8. Deskripsi Singkat & Langkah Kerja</label>
+                            <textarea id="lab-desc" rows="3" placeholder="Tuliskan secara ringkas cara kamu akan membuat produk ini..." class="w-full p-2.5 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500"></textarea>
+                        </div>
+
+                        <button onclick="generateDesignCard()" class="w-full py-3 bg-terracotta-500 hover:bg-terracotta-600 text-white font-bold rounded-xl shadow transition">
+                            ✨ Hasilkan Kartu Desain Produk
+                        </button>
+                    </div>
+
+                    <!-- PREVIEW KARTU DESAIN -->
+                    <div class="flex flex-col items-center justify-between">
+                        <div id="printable-card" class="w-full bg-white p-6 sm:p-8 rounded-2xl shadow-md border-2 border-dashed border-earth-300 flex-grow">
+                            <div class="text-center border-b-2 border-earth-800 pb-4 mb-4">
+                                <span class="text-xs font-bold text-terracotta-500 tracking-wider uppercase">LEMBAR DESAIN PROTOTIPE KERAJINAN</span>
+                                <h3 id="card-product-title" class="text-2xl font-extrabold text-earth-900 mt-1">[ Nama Produk Kerajinan ]</h3>
+                                <p class="text-xs text-earth-600">Perancang: <span id="card-designer-name" class="font-semibold text-earth-900">[ Nama Siswa ]</span> | Kelas VII SMP</p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 text-xs sm:text-sm mb-4">
+                                <div class="bg-earth-50 p-3 rounded-lg border border-earth-200">
+                                    <span class="block text-earth-500 text-[10px] font-bold uppercase">Bahan Alam Lunak</span>
+                                    <strong id="card-material" class="text-earth-900">-</strong>
+                                </div>
+                                <div class="bg-earth-50 p-3 rounded-lg border border-earth-200">
+                                    <span class="block text-earth-500 text-[10px] font-bold uppercase">Bentuk & Fungsi</span>
+                                    <strong id="card-shape-function" class="text-earth-900">-</strong>
+                                </div>
+                                <div class="bg-earth-50 p-3 rounded-lg border border-earth-200">
+                                    <span class="block text-earth-500 text-[10px] font-bold uppercase">Teknik Pembuatan</span>
+                                    <strong id="card-technique" class="text-earth-900">-</strong>
+                                </div>
+                                <div class="bg-earth-50 p-3 rounded-lg border border-earth-200">
+                                    <span class="block text-earth-500 text-[10px] font-bold uppercase">Peralatan Utama</span>
+                                    <strong id="card-tools" class="text-earth-900">-</strong>
+                                </div>
+                            </div>
+
+                            <div class="bg-earth-50 p-3 rounded-lg border border-earth-200 text-xs sm:text-sm mb-4">
+                                <span class="block text-earth-500 text-[10px] font-bold uppercase mb-1">Rencana Prosedur Kerja:</span>
+                                <p id="card-desc" class="text-earth-800 whitespace-pre-line italic">- Tuliskan ide rancangan pada form di samping -</p>
+                            </div>
+
+                            <div class="flex justify-between items-center text-[10px] text-earth-500 pt-2 border-t border-earth-200">
+                                <span>Media Pembelajaran Interaktif Prakarya VII</span>
+                                <span>Kurikulum Merdeka</span>
+                            </div>
+                        </div>
+
+                        <!-- Print Action Button -->
+                        <div class="w-full mt-4 flex gap-3 no-print">
+                            <button onclick="window.print()" class="w-full py-3 bg-earth-800 hover:bg-earth-900 text-white font-bold rounded-xl shadow transition flex items-center justify-center gap-2">
+                                🖨️ Cetak / Simpan Lembar Kerja (PDF)
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 8. MENU EVALUASI / KUIS ==================== -->
+        <section id="page-evaluasi" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200">
+                <div class="flex items-center justify-between mb-6 border-b border-earth-300 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">📝</span>
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Kuis Evaluasi Pembelajaran</h2>
+                            <p class="text-xs text-earth-600">Total 15 Soal (10 Pilihan Ganda + 5 Benar/Salah)</p>
+                        </div>
+                    </div>
+                    <div id="quiz-progress" class="text-sm font-bold bg-earth-200 px-3 py-1.5 rounded-lg text-earth-800">
+                        Soal 1 / 15
+                    </div>
+                </div>
+
+                <!-- CONTAINER SOAL -->
+                <div id="quiz-container" class="bg-white p-6 sm:p-8 rounded-2xl border border-earth-200 min-h-[320px] flex flex-col justify-between">
+                    <div id="question-box">
+                        <!-- Questions rendered by JS -->
+                    </div>
+
+                    <div class="mt-6 flex justify-between items-center border-t border-earth-200 pt-4">
+                        <span id="quiz-feedback" class="text-sm font-bold"></span>
+                        <button id="next-quiz-btn" onclick="nextQuestion()" class="px-6 py-2.5 bg-terracotta-500 text-white rounded-xl font-bold hover:bg-terracotta-600 transition hidden">
+                            Soal Selanjutnya ➔
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CONTAINER HASIL SKOR (HIDDEN BY DEFAULT) -->
+                <div id="quiz-result-box" class="hidden bg-white p-8 rounded-2xl border border-earth-200 text-center animate-fade-in">
+                    <div class="text-6xl mb-3">🏆</div>
+                    <h3 class="text-2xl font-bold text-earth-900 mb-2">Hasil Evaluasi Belajar</h3>
+                    <p class="text-earth-600 text-sm mb-6">Berikut adalah capaian hasil belajar kamu:</p>
+
+                    <div class="max-w-xs mx-auto bg-earth-50 p-6 rounded-2xl border border-earth-200 mb-6">
+                        <span class="text-xs font-bold text-earth-500 uppercase">Skor Akhir Kamu</span>
+                        <div id="final-score" class="text-5xl font-black text-terracotta-500 my-2">0</div>
+                        <span id="score-category" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-leaf-500 text-white">Sangat Baik</span>
+                    </div>
+
+                    <p id="result-message" class="text-earth-800 text-sm mb-6 max-w-md mx-auto"></p>
+
+                    <button onclick="restartQuiz()" class="px-8 py-3 bg-earth-800 text-white font-bold rounded-xl shadow hover:bg-earth-900 transition">
+                        🔄 Ulangi Kuis
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 9. MENU REFLEKSI ==================== -->
+        <section id="page-refleksi" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-3xl">🤔</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Refleksi Belajar Siswa</h2>
+                </div>
+                <p class="text-earth-700 mb-6">Isilah pertanyaan refleksi berikut untuk mengulas pengalaman belajarmu hari ini:</p>
+
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-earth-200 space-y-5">
+                    <div>
+                        <label class="block text-sm font-bold text-earth-900 mb-2">1. Apa pengetahuan baru yang paling menarik bagi kamu setelah mempelajari modul ini?</label>
+                        <textarea rows="2" class="w-full p-3 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500" placeholder="Tuliskan pengalaman barumu..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-earth-900 mb-2">2. Dari jenis-jenis bahan alam lunak yang ada, mana yang paling ingin kamu coba buat secara nyata? Mengapa?</label>
+                        <textarea rows="2" class="w-full p-3 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500" placeholder="Sebutkan bahan dan alasannya..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-earth-900 mb-2">3. Apakah kamu mengalami kesulitan dalam memahami materi atau merancang produk pada media ini?</label>
+                        <textarea rows="2" class="w-full p-3 bg-earth-50 border border-earth-300 rounded-xl text-sm focus:ring-2 focus:ring-terracotta-500" placeholder="Tuliskan kendala atau masukanmu..."></textarea>
+                    </div>
+
+                    <button onclick="saveRefleksi()" class="px-6 py-3 bg-leaf-500 hover:bg-leaf-600 text-white font-bold rounded-xl shadow transition">
+                        💾 Simpan Refleksi Saya
+                    </button>
+                    <span id="refleksi-status" class="ml-3 text-sm font-bold text-leaf-600 hidden">✓ Refleksi berhasil disimpan!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 10. MENU PROFIL PENGEMBANG ==================== -->
+        <section id="page-profil" class="page-section hidden animate-fade-in">
+            <div class="bg-earth-100 rounded-3xl p-6 sm:p-10 shadow-lg border border-earth-200 max-w-3xl mx-auto">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">👨‍🏫</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-earth-900">Profil Pengembang Media</h2>
+                </div>
+
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-earth-200 text-center">
+                    <div class="w-24 h-24 bg-earth-200 text-earth-800 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 font-bold border-4 border-earth-300">
+                        🎨
+                    </div>
+                    <h3 class="text-xl font-bold text-earth-900">Tim Pengembang Prakarya Digital</h3>
+                    <p class="text-xs text-terracotta-500 font-bold uppercase tracking-wider mt-1">Spesialis Media Pembelajaran SMP/MTs</p>
+                    
+                    <div class="mt-6 text-left space-y-3 bg-earth-50 p-4 rounded-xl border border-earth-200 text-sm">
+                        <div class="flex justify-between border-b border-earth-200 pb-2">
+                            <span class="text-earth-600">Mata Pelajaran:</span>
+                            <strong class="text-earth-900">Prakarya (Kerajinan)</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-earth-200 pb-2">
+                            <span class="text-earth-600">Sasaran / Fase:</span>
+                            <strong class="text-earth-900">Kelas VII / Fase D SMP</strong>
+                        </div>
+                        <div class="flex justify-between border-b border-earth-200 pb-2">
+                            <span class="text-earth-600">Kurikulum:</span>
+                            <strong class="text-earth-900">Kurikulum Merdeka</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-earth-600">Tahun Pengembangan:</span>
+                            <strong class="text-earth-900">2026</strong>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-earth-600 mt-6 leading-relaxed">
+                        Media Pembelajaran Interaktif (MPI) ini dikembangkan berbasis teknologi web modern tanpa ketergantungan pada backend eksternal, sehingga ringan, responsif, dan siap digunakan secara offline dalam proses pembelajaran di kelas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-earth-900 text-earth-300 py-4 text-center text-xs mt-8 border-t border-earth-800">
+        <p>© 2026 Media Pembelajaran Interaktif (MPI) Prakarya VII • Kurikulum Merdeka SMP/MTs</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ==================== 1. NAVIGATION LOGIC ==================== */
+        function navigateTo(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.add('hidden'));
+
+            // Show selected page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* ==================== 2. MATERI TAB SWITCHING ==================== */
+        function switchMateriTab(tabId) {
+            // Hide all sub-tabs
+            const contents = document.querySelectorAll('.materi-tab-content');
+            contents.forEach(c => c.classList.add('hidden'));
+
+            // Reset buttons styling
+            const btns = document.querySelectorAll('.materi-tab-btn');
+            btns.forEach(b => {
+                b.classList.remove('bg-earth-800', 'text-white');
+                b.classList.add('bg-earth-200', 'text-earth-800');
+            });
+
+            // Active chosen tab
+            document.getElementById('materi-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('bg-earth-200', 'text-earth-800');
+            activeBtn.classList.add('bg-earth-800', 'text-white');
+        }
+
+        /* ==================== 3. GALERI MODAL DATA & LOGIC ==================== */
+        const galeriData = {
+            'vas-tanah-liat': {
+                title: 'Vas Bunga Motif Kasongan',
+                material: 'Tanah Liat (Clay)',
+                tools: 'Meja Putar, Butsir, Air, Rol Kayu',
+                technique: 'Teknik Pilin (Coiling) & Putar',
+                function: 'Fungsi Pakai & Hias (Wadah Bunga / Pajangan)',
+                desc: 'Vas bunga berbahan tanah liat lokal yang dibentuk dengan teknik pilin bertingkat di atas meja putar, kemudian dibakar dalam tungku hingga mengeras sempurna.'
+            },
+            'miniatur-getah': {
+                title: 'Perahu Naga Dayak',
+                material: 'Getah Nyatu Alami',
+                tools: 'Panci Perebus, Air Panas, Pisau Ukir, Cetakan Wood',
+                technique: 'Teknik Rebus, Dipijit, & Diukir',
+                function: 'Fungsi Hias (Cendera Mata / Souvenir)',
+                desc: 'Getah pohon nyatu direbus dalam air mendidih agar melunak, kemudian dibentuk menjadi miniatur perahu adat suku Dayak yang sangat detail.'
+            },
+            'dompet-kulit': {
+                title: 'Dompet Etnik Ukir',
+                material: 'Kulit Alam Sapi (Disamak)',
+                tools: 'Pahat Ukir Kulit, Jarum Dua, Benang Lilin, Cutter',
+                technique: 'Teknik Tatah/Ukir & Menjahit Manual',
+                function: 'Fungsi Pakai (Tempat Menyimpan Uang/Kartu)',
+                desc: 'Dibuat dari lembaran kulit sapi alami yang diukir bermotif tradisional nusantara, dipotong presisi, lalu dijahit secara rapi menggunakan benang berlapis lilin.'
+            },
+            'gantungan-flour': {
+                title: 'Gantungan Kunci Buah',
+                material: 'Flour Clay (Tepung Tapioka & Lem)',
+                tools: 'Papan Alas, Pewarna Makanan, Gantungan Ring',
+                technique: 'Teknik Pijit & Pilin Kecil',
+                function: 'Fungsi Pakai & Aksesori',
+                desc: 'Terbuat dari adonan tepung dan lem yang dibentuk menyerupai miniatur buah-buahan secara mudah, dikeringkan di udara terbuka tanpa pembakaran.'
+            },
+            'celengan-gerabah': {
+                title: 'Celengan Ayam Tradisional',
+                material: 'Tanah Liat',
+                tools: 'Cetakan Gips 2 Sisi, Butsir, Kuas, Cat Akrilik',
+                technique: 'Teknik Cetak Tuang / Press',
+                function: 'Fungsi Pakai (Menabung)',
+                desc: 'Dibuat menggunakan cetakan gips untuk efisiensi jumlah banyak, dikeringkan, dibakar, lalu diberi cat akrilik berwarna cerah menarik.'
+            },
+            'wayang-kulit': {
+                title: 'Wayang Kulit Purwa',
+                material: 'Kulit Kerbau / Sapi Alami',
+                tools: 'Patah Tatah Besi, Palu Kayu, Cat Sungging, Gapit Tanduk',
+                technique: 'Teknik Tatah Sungging',
+                function: 'Fungsi Seni Pertunjukan & Hiasan Wall Decor',
+                desc: 'Seni kerajinan bernilai tinggi yang menatah kulit kerbau secara halus membentuk kerawitan wayang, diwarnai cat khusus dan ditopang gapit tanduk.'
+            }
+        };
+
+        function openGaleriModal(key) {
+            const item = galeriData[key];
+            if (!item) return;
+
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <h3 class="text-xl font-bold text-earth-900 mb-2">${item.title}</h3>
+                <div class="space-y-2 text-xs sm:text-sm text-earth-800 mb-4">
+                    <p><strong>🪴 Bahan Utama:</strong> ${item.material}</p>
+                    <p><strong>🛠️ Alat yang Digunakan:</strong> ${item.tools}</p>
+                    <p><strong>🎯 Teknik Pembuatan:</strong> ${item.technique}</p>
+                    <p><strong>💡 Fungsi Produk:</strong> ${item.function}</p>
+                    <div class="p-3 bg-earth-50 rounded-xl border border-earth-200 mt-3 text-earth-700">
+                        ${item.desc}
+                    </div>
+                </div>
+            `;
+            document.getElementById('galeri-modal').classList.remove('hidden');
+        }
+
+        function closeGaleriModal() {
+            document.getElementById('galeri-modal').classList.add('hidden');
+        }
+
+        /* ==================== 4. AKTIVITAS INTERAKTIF LOGIC ==================== */
+        function checkAktivitas1() {
+            const v1 = document.getElementById('act-1').value;
+            const v2 = document.getElementById('act-2').value;
+            const v3 = document.getElementById('act-3').value;
+            const feedback = document.getElementById('act-feedback');
+
+            if (v1 === 'benar' && v2 === 'benar' && v3 === 'benar') {
+                feedback.className = "text-sm font-bold text-leaf-600";
+                feedback.innerText = "🎉 Hebat! Semua pasangan alat dan fungsi BENAR!";
+            } else {
+                feedback.className = "text-sm font-bold text-terracotta-500";
+                feedback.innerText = "❌ Masih ada pasangan yang belum tepat. Coba periksa kembali!";
+            }
+        }
+
+        function checkAktivitas2() {
+            const s1 = document.getElementById('seq-step-1').value;
+            const s2 = document.getElementById('seq-step-2').value;
+            const s3 = document.getElementById('seq-step-3').value;
+            const s4 = document.getElementById('seq-step-4').value;
+            const feedback = document.getElementById('act-feedback-2');
+
+            if (s1 === "1" && s2 === "2" && s3 === "3" && s4 === "4") {
+                feedback.className = "text-sm font-bold text-leaf-600";
+                feedback.innerText = "🎉 Luar Biasa! Urutan tahapan prosedur kerja kamu 100% TEPAT!";
+            } else {
+                feedback.className = "text-sm font-bold text-terracotta-500";
+                feedback.innerText = "❌ Urutan belum sesuai. Ingat: Sketsa ➔ Alat ➔ Bentuk ➔ Finishing";
+            }
+        }
+
+        /* ==================== 5. LAB PERANCANGAN VIRTUAL LOGIC ==================== */
+        function generateDesignCard() {
+            const designer = document.getElementById('lab-designer-name').value.trim() || 'Siswa Kelas VII';
+            const product = document.getElementById('lab-product-name').value.trim() || 'Produk Kerajinan Bahan Lunak';
+            const material = document.getElementById('lab-material').value;
+            const shape = document.getElementById('lab-shape').value;
+            const technique = document.getElementById('lab-technique').value;
+            const func = document.getElementById('lab-function').value;
+            const tools = document.getElementById('lab-tools').value.trim() || 'Butsir, Papan Alas, Pernis';
+            const desc = document.getElementById('lab-desc').value.trim() || 'Belum ada deskripsi langkah kerja yang dimasukkan.';
+
+            document.getElementById('card-designer-name').innerText = designer;
+            document.getElementById('card-product-title').innerText = product;
+            document.getElementById('card-material').innerText = material;
+            document.getElementById('card-shape-function').innerText = `${shape} (${func})`;
+            document.getElementById('card-technique').innerText = technique;
+            document.getElementById('card-tools').innerText = tools;
+            document.getElementById('card-desc').innerText = desc;
+        }
+
+        /* ==================== 6. KUIS EVALUASI (15 SOAL) LOGIC ==================== */
+        const quizData = [
+            // 10 Pilihan Ganda
+            {
+                type: 'mc',
+                question: '1. Bahan alam lunak adalah bahan karya kerajinan yang diperoleh dari alam dengan sifat fisik dasar...',
+                options: ['Keras dan berbobot berat', 'Lentur, lembut, dan mudah dibentuk', 'Kaku dan mudah pecah saat ditekan', 'Cair dan butuh pembekuan lama'],
+                answer: 1
+            },
+            {
+                type: 'mc',
+                question: '2. Bahan alam lunak yang berasal dari getah pohon khas Kalimantan Tengah adalah...',
+                options: ['Tanah Liat', 'Flour Clay', 'Getah Nyatu', 'Kulit Sapi'],
+                answer: 2
+            },
+            {
+                type: 'mc',
+                question: '3. Peralatan utama berbahan kayu yang digunakan untuk meraut dan mengukir permukaan tanah liat disebut...',
+                options: ['Gunting', 'Butsir', 'Pahat Besi', 'Amplas'],
+                answer: 1
+            },
+            {
+                type: 'mc',
+                question: '4. Teknik pembentukan tanah liat dengan cara mencubit adonan langsung dengan jari tangan dinamakan teknik...',
+                options: ['Pijit (Pinching)', 'Cetak (Molding)', 'Lempengan (Slab)', 'Putar (Throwing)'],
+                answer: 0
+            },
+            {
+                type: 'mc',
+                question: '5. Produk kerajinan vas bunga atau gerabah yang mengutamakan fungsi penggunaan sehari-hari termasuk kategori...',
+                options: ['Fungsi Hias', 'Fungsi Pakai', 'Fungsi Simbolis', 'Fungsi Ritual'],
+                answer: 1
+            },
+            {
+                type: 'mc',
+                question: '6. Perhatikan tahapan berikut: (1) Finishing (2) Pembentukan (3) Sketsa (4) Persiapan Alat. Urutan prosedur yang benar adalah...',
+                options: ['(3) - (4) - (2) - (1)', '(1) - (2) - (3) - (4)', '(4) - (3) - (1) - (2)', '(3) - (1) - (4) - (2)'],
+                answer: 0
+            },
+            {
+                type: 'mc',
+                question: '7. Bahan alam lunak berupa adonan tepung, air, dan lem yang mudah diberi pewarna disebut...',
+                options: ['Clay Plastisin', 'Flour Clay', 'Gipsum', 'Lilin Malam'],
+                answer: 1
+            },
+            {
+                type: 'mc',
+                question: '8. Alat meja putar sangat mempermudah pengrajin dalam membuat bentuk kerajinan berbentuk...',
+                options: ['Kubus dan Persegi', 'Silindris / Lingkaran Simetris', 'Lembaran Tipis', 'Segitiga Datar'],
+                answer: 1
+            },
+            {
+                type: 'mc',
+                question: '9. Proses pengeringan kerajinan tanah liat secara ideal dilakukan dengan cara...',
+                options: ['Dianginkan di tempat teduh', 'Dijemur langsung terik matahari jam 12 siang', 'Dibakar langsung saat masih basah', 'Rendam dalam air es'],
+                answer: 0
+            },
+            {
+                type: 'mc',
+                question: '10. Teknik membentangkan adonan tanah liat menjadi gulungan panjang menyerupai tali disebut teknik...',
+                options: ['Lempengan', 'Pilin (Coiling)', 'Cetak Tuang', 'Pahat'],
+                answer: 1
+            },
+            // 5 Benar/Salah
+            {
+                type: 'tf',
+                question: '11. [Benar/Salah] Kulit hewan yang telah disamak termasuk dalam kelompok bahan alam lunak.',
+                options: ['BENAR', 'SALAH'],
+                answer: 0
+            },
+            {
+                type: 'tf',
+                question: '12. [Benar/Salah] Pembakaran tanah liat pada suhu tinggi bertujuan untuk membuat kerajinan kembali menjadi lunak.',
+                options: ['BENAR', 'SALAH'],
+                answer: 1
+            },
+            {
+                type: 'tf',
+                question: '13. [Benar/Salah] Rol kayu (rolling pin) digunakan untuk membuat teknik lempengan (slab) pada bahan lunak.',
+                options: ['BENAR', 'SALAH'],
+                answer: 0
+            },
+            {
+                type: 'tf',
+                question: '14. [Benar/Salah] Kerajinan patung miniatur yang dipajang di ruang tamu merupakan contoh kerajinan fungsi pakai.',
+                options: ['BENAR', 'SALAH'],
+                answer: 1
+            },
+            {
+                type: 'tf',
+                question: '15. [Benar/Salah] Tahapan perancangan/sketsa ide dilakukan SEBELUM proses pembentukan produk dimulai.',
+                options: ['BENAR', 'SALAH'],
+                answer: 0
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let userScore = 0;
+        let answered = false;
+
+        function renderQuestion() {
+            answered = false;
+            const q = quizData[currentQuestionIdx];
+            const qBox = document.getElementById('question-box');
+            const progress = document.getElementById('quiz-progress');
+            const feedback = document.getElementById('quiz-feedback');
+            const nextBtn = document.getElementById('next-quiz-btn');
+
+            progress.innerText = `Soal ${currentQuestionIdx + 1} / ${quizData.length}`;
+            feedback.innerText = '';
+            nextBtn.classList.add('hidden');
+
+            let optionsHtml = '';
+            q.options.forEach((opt, idx) => {
+                optionsHtml += `
+                    <button onclick="selectAnswer(${idx})" class="quiz-opt-btn w-full text-left p-3.5 bg-earth-50 hover:bg-earth-200 border border-earth-300 rounded-xl text-sm font-medium text-earth-900 transition mb-2">
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            qBox.innerHTML = `
+                <h3 class="text-base sm:text-lg font-bold text-earth-900 mb-4">${q.question}</h3>
+                <div class="space-y-2">${optionsHtml}</div>
+            `;
+        }
+
+        function selectAnswer(selectedIdx) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestionIdx];
+            const feedback = document.getElementById('quiz-feedback');
+            const nextBtn = document.getElementById('next-quiz-btn');
+            const btns = document.querySelectorAll('.quiz-opt-btn');
+
+            if (selectedIdx === q.answer) {
+                userScore += (100 / quizData.length);
+                btns[selectedIdx].classList.remove('bg-earth-50', 'border-earth-300');
+                btns[selectedIdx].classList.add('bg-leaf-500', 'text-white', 'border-leaf-600');
+                feedback.className = "text-sm font-bold text-leaf-600";
+                feedback.innerText = "✓ Jawabanmu TEPAT!";
+            } else {
+                btns[selectedIdx].classList.remove('bg-earth-50', 'border-earth-300');
+                btns[selectedIdx].classList.add('bg-terracotta-500', 'text-white', 'border-terracotta-600');
+                btns[q.answer].classList.remove('bg-earth-50', 'border-earth-300');
+                btns[q.answer].classList.add('bg-leaf-500', 'text-white');
+                feedback.className = "text-sm font-bold text-terracotta-500";
+                feedback.innerText = "❌ Jawaban kurang tepat.";
+            }
+
+            if (currentQuestionIdx < quizData.length - 1) {
+                nextBtn.classList.remove('hidden');
+            } else {
+                nextBtn.innerText = "Lihat Hasil Akhir 🏆";
+                nextBtn.classList.remove('hidden');
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIdx < quizData.length - 1) {
+                currentQuestionIdx++;
+                renderQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-progress').classList.add('hidden');
+            
+            const resultBox = document.getElementById('quiz-result-box');
+            resultBox.classList.remove('hidden');
+
+            const finalScoreRounded = Math.round(userScore);
+            document.getElementById('final-score').innerText = finalScoreRounded;
+
+            const cat = document.getElementById('score-category');
+            const msg = document.getElementById('result-message');
+
+            if (finalScoreRounded >= 85) {
+                cat.className = "inline-block px-4 py-1 rounded-full text-xs font-bold bg-leaf-500 text-white";
+                cat.innerText = "Sangat Baik / Istimewa 🌟";
+                msg.innerText = "Selamat! Kamu telah menguasai seluruh materi kerajinan bahan alam lunak dengan sangat memuaskan!";
+            } else if (finalScoreRounded >= 70) {
+                cat.className = "inline-block px-4 py-1 rounded-full text-xs font-bold bg-earth-700 text-white";
+                cat.innerText = "Baik / Tuntas 👍";
+                msg.innerText = "Bagus sekali! Pemahamanmu sudah tuntas. Tingkatkan terus kreativitas rancangan kerajinanmu!";
+            } else {
+                cat.className = "inline-block px-4 py-1 rounded-full text-xs font-bold bg-terracotta-500 text-white";
+                cat.innerText = "Perlu Latihan Lagi 💪";
+                msg.innerText = "Jangan berkecil hati! Pelajari kembali modul materi dan cobalah kuis ini sekali lagi.";
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestionIdx = 0;
+            userScore = 0;
+            document.getElementById('quiz-result-box').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-progress').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        /* ==================== 7. REFLEKSI LOGIC ==================== */
+        function saveRefleksi() {
+            const status = document.getElementById('refleksi-status');
+            status.classList.remove('hidden');
+            setTimeout(() => {
+                status.classList.add('hidden');
+            }, 3000);
+        }
+
+        /* INITIALIZATION ON LOAD */
+        window.onload = function() {
+            renderQuestion();
+            generateDesignCard(); // Pre-populate printable card mockup
+        };
+    </script>
+</body>
+</html>
